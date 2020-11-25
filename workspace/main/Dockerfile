@@ -4,7 +4,6 @@ RUN wget https://deb.nodesource.com/setup_lts.x -O /tmp/node_setup.sh \
  && bash /tmp/node_setup.sh \
  && rm /tmp/node_setup.sh
 RUN apt-get install -y nodejs build-essential
-#    libgtkextra-dev libgconf2-dev libnss3 libasound2 libxtst-dev
 
 ## Chromium dependencies (needed for electron)
 RUN apt-get install -y ca-certificates \

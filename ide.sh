@@ -3,7 +3,7 @@
 XSOCK=/tmp/.X11-unix
 XAUTH=/tmp/.docker.xauth
 xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-docker run -ti --rm -v $XSOCK:$XSOCK \
+docker run --rm -v $XSOCK:$XSOCK \
     -v $XAUTH:$XAUTH \
     -v /usr/share/icons/Pop:/usr/share/icons/Pop:ro \
     -v /usr/share/fonts:/usr/share/fonts:ro \
@@ -17,4 +17,6 @@ docker run -ti --rm -v $XSOCK:$XSOCK \
     -e DISPLAY=$DISPLAY \
     -e TZ=$(cat /etc/timezone) \
     -u $USER \
+    --name ambrogio-hydra-dev \
+    --privileged \
     ambrogio-hydra/workspace/d-env:latest
