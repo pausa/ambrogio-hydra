@@ -24,6 +24,7 @@ body{
   display: flex;
   flex-direction: column;
   background-color: black;
+  /* TODO maybe font size should be relative to window size */
   font-size: 100%;
 }
 #app {
