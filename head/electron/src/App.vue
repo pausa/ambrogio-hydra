@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <auth/>
     <clock class="clock"/>
     <calendar class="calendar"/>
   </div>
@@ -9,11 +10,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import Clock from '@/components/Clock.vue'
 import Calendar from '@/components/Calendar.vue'
+import Auth from '@/components/Auth.vue'
 
 @Component({
   components: {
     Clock,
-    Calendar
+    Calendar,
+    Auth
   }
 })
 export default class App extends Vue {}

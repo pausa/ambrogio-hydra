@@ -67,10 +67,6 @@ app.on('ready', async () => {
     // Install Vue Devtools
     try {
       await installExtension(VUEJS_DEVTOOLS)
-      //await installExtension({
-      //  id: 'ljjemllljcmogpfapbkkighbhhppjdbg',
-      //  electron: '>=1.2.1'
-      //})
     } catch (e) {
       console.error('Vue Devtools failed to install:', e.toString())
     }
