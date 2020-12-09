@@ -3,6 +3,7 @@
     <auth/>
     <clock class="clock"/>
     <calendar class="calendar"/>
+    <notification class="notification"/>
   </div>
 </template>
 
@@ -11,12 +12,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import Clock from '@/components/Clock.vue'
 import Calendar from '@/components/Calendar.vue'
 import Auth from '@/components/Auth.vue'
+import Notification from '@/components/Notification.vue'
 
 @Component({
   components: {
     Clock,
     Calendar,
-    Auth
+    Auth,
+    Notification
   }
 })
 export default class App extends Vue {}
@@ -42,5 +45,8 @@ body{
 }
 .calendar{
   font-size: 2em;
+}
+.notification {
+  font-size: 4em;
 }
 </style>

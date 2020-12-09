@@ -5,7 +5,9 @@ const config = {
   authDomain: 'ambrogio-hydra.firebaseapp.com',
   databaseURL: 'https://ambrogio-hydra.firebaseio.com',
   projectId: 'ambrogio-hydra',
-  storageBucket: 'ambrogio-hydra.appspot.com'
+  storageBucket: 'ambrogio-hydra.appspot.com',
+  messagingSenderId: '370597727411',
+  appId: '1:370597727411:web:9d13e739f1fad49a16f4c6'
 }
 
 firebase.initializeApp(config)
@@ -15,4 +17,4 @@ const googleAuthProvider = firebase.auth.GoogleAuthProvider
 // Get a reference to the database service
 const database = firebase.database()
 
-export { auth, database, googleAuthProvider }
+export { auth, database, config, googleAuthProvider }

@@ -1,6 +1,5 @@
 <template>
   <div class="auth">
-    <div class="user" v-if="user !== null">{{ user }}</div>
     <div class="userCode" v-if="deviceCode !== null">User code: {{ userCode }}. Visit: {{ verificationUrl }}</div>
   </div>
 </template>
@@ -17,22 +16,18 @@ export default class Auth extends Vue {
   clientId = '370597727411-sd0k1ldd21lb9mmatigvghdcfcq80sc9.apps.googleusercontent.com';
   clientSecret = 'RgLeM--FAuESycIaetH2dx2j'
   grantType = 'urn:ietf:params:oauth:grant-type:device_code'
-  user = null
-  updater = null
-  userCode = null
-  deviceCode = null
-  verificationUrl = null
+  updater: NodeJS.Timeout | null = null
+  userCode: string | null = null
+  deviceCode: string | null = null
+  verificationUrl: string | null = null
 
   mounted () {
     this.stopUpdater()
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        this.user = user.email
-      } else {
-        this.user = null
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
         this.startLogin()
       }
-    }.bind(this))
+    })
   }
 
   destroyed () {
@@ -51,13 +46,13 @@ export default class Auth extends Vue {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
-    }).then(function (result) {
+    }).then((result) => {
       this.userCode = result.data.user_code
       this.deviceCode = result.data.device_code
       this.verificationUrl = result.data.verification_url
       const millis = parseInt(result.data.interval) * 1000
       this.updater = setInterval(this.checkAuth, millis)
-    }.bind(this))
+    })
   }
 
   checkAuth (): void {
@@ -78,12 +73,17 @@ export default class Auth extends Vue {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
-    }).then(function (result) {
+    }).then((result) => {
       this.stopUpdater()
+      this.deviceCode = null
       const cred = googleAuthProvider.credential(null, result.data.access_token)
       auth.signInWithCredential(cred)
-      this.deviceCode = null
-    }.bind(this)).catch(function () {
+        .then(() => {
+          // nothing to do
+        }).catch(() => {
+          this.startLogin()
+        })
+    }).catch(() => {
       // nothing to do
     })
   }
