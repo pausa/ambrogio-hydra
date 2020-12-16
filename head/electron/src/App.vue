@@ -47,6 +47,6 @@ body{
   font-size: 2em;
 }
 .notification {
-  font-size: 4em;
+  font-size: 2em;
 }
 </style>

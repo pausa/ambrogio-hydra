@@ -9,8 +9,8 @@ import {
 } from 'electron-push-receiver'
 
 class CloudMessaging {
-  // TODO make it singleton?
   constructor () {
+    this.clearListeners()
     auth.onAuthStateChanged((user) => {
       if (user) {
         // notification should be init only after registered to firebase
@@ -39,6 +39,14 @@ class CloudMessaging {
     ipcRenderer.send(START_NOTIFICATION_SERVICE, firebaseConfig.messagingSenderId)
   }
 
+  clearListeners () {
+    ipcRenderer.removeAllListeners(NOTIFICATION_SERVICE_ERROR)
+    ipcRenderer.removeAllListeners(NOTIFICATION_SERVICE_STARTED)
+    ipcRenderer.removeAllListeners(TOKEN_UPDATED)
+    ipcRenderer.removeAllListeners(START_NOTIFICATION_SERVICE)
+    ipcRenderer.removeAllListeners(ON_NOTIFICATION_RECEIVED)
+  }
+
   // TODO maybe handle duplicated notifications
   // TODO allow to deregister
   onNotification (callback: (callback: {}) => void) {
@@ -57,4 +65,5 @@ class CloudMessaging {
   }
 }
 
-export { CloudMessaging }
+const messagingService = new CloudMessaging()
+export { messagingService }
