@@ -1,28 +1,30 @@
 <template>
   <div class="notification">
-    <div v-if="show">
-      <div class="line"></div>
-      <div class="title">{{ message.title }}</div>
-      <div class="text">{{ message.text }}</div>
-    </div>
-  </div>
+    <transition name="progress"
+      v-on:after-leave="showPlaceholder = true; message = null"
+      v-on:before-enter="showPlaceholder = false">
+      <div v-if="showProgress" class="line"></div>
+    </transition>
+    <div v-if="showPlaceholder" class="line"></div>
+    <transition name="fade">
+      <div v-if="message !== null">
+        <div class="title">{{ message.title }}</div>
+        <div class="text">{{ message.text }}</div>
+      </div>
+    </transition>
+</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { auth } from '@/service/firebase'
-import { messagingService } from '@/service/cloudMessaging'
-
-class Message {
-  // eslint-disable-next-line no-useless-constructor
-  constructor (readonly title: string, readonly text: string) {
-  }
-}
+import { messagingService, Message } from '@/service/cloudMessaging'
 
 @Component
 export default class Notification extends Vue {
-  show = false
+  showProgress = false
+  showPlaceholder = false
   messaging = messagingService
   // TODO scrolling
   message: Message | null = null;
@@ -30,58 +32,75 @@ export default class Notification extends Vue {
   timeout: NodeJS.Timeout | null = null;
 
   mounted () {
-    this.messaging.onNotification(not => console.log('YAY'))
-    setTimeout(this.testNotifications, 1000)
-    setTimeout(this.testNotifications, 18000)
+    this.messaging.onNotification(this.push)
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.push('Info', `Logged in as: ${user.email}`)
+        this.push(new Message('Info', `Logged in as: ${user.email}`))
       }
     })
   }
 
-  testNotifications () {
-    this.push('info', '1')
-    this.push('info', '2')
-    this.push('info', '3')
-  }
-
-  push (title: string, text: string) {
-    this.messageQueue.push(new Message(title, text))
+  push (message: Message) {
+    this.messageQueue.push(message)
     this.display()
   }
 
   display () {
     if (!this.timeout) {
       const msg = this.messageQueue.shift()
-      if (msg === undefined) {
-        this.show = false
-      } else {
+      if (msg !== undefined) {
         this.message = msg
-        this.show = true
-        this.timeout = setTimeout(() => {
-          this.timeout = null
-          this.display()
-        }, 5000)
+        this.showProgress = true
+        this.timeout = setTimeout(this.hide, 100)
       }
     }
   }
 
   hide () {
-    this.show = false
+    this.showProgress = false
+    // at the end of the timeout we remove it and show a new notification,
+    // if available
+    this.timeout = setTimeout(() => {
+      this.timeout = null
+      this.display()
+    }, 5000)
   }
 }
 </script>
 
 <style scoped>
  @keyframes progress {
-   from {width: 100%}
-   to {width: 0 }
+   from {width: 0}
+   to {width: 100%}
+ }
+
+ /*noinspection CssUnusedSymbol*/
+ .progress-enter-active {
+   animation-duration: 0.10s;
+   animation-timing-function: linear;
+   animation-name: progress;
+ }
+ /*noinspection CssUnusedSymbol*/
+ .progress-leave-active {
+   animation-duration: 5s;
+   animation-name: progress;
+   animation-timing-function: linear;
+   animation-direction: reverse;
+ }
+ /*noinspection CssUnusedSymbol*/
+ .fade-enter-active, .fade-leave-active {
+   transition-duration: 0.10s;
+   transition-property: opacity
+ }
+ /*noinspection CssUnusedSymbol*/
+ .fade-enter, .fade-leave-to {
+   opacity: 0
  }
  .line {
    border-top: 1px solid;
+   margin: auto;
    padding-bottom: 0.25em;
-   animation: progress 5s linear infinite;
+   width: 0;
  }
  .title{
    font-weight: bold;

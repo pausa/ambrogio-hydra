@@ -8,13 +8,18 @@ import {
   TOKEN_UPDATED
 } from 'electron-push-receiver'
 
+class Message {
+  // eslint-disable-next-line no-useless-constructor
+  constructor (readonly title: string, readonly text: string) {
+  }
+}
+
 class CloudMessaging {
   constructor () {
     this.clearListeners()
     auth.onAuthStateChanged((user) => {
       if (user) {
         // notification should be init only after registered to firebase
-        // TODO make singleton or deregister
         this.initListeners()
       }
     })
@@ -47,13 +52,13 @@ class CloudMessaging {
     ipcRenderer.removeAllListeners(ON_NOTIFICATION_RECEIVED)
   }
 
-  // TODO maybe handle duplicated notifications
   // TODO allow to deregister
-  onNotification (callback: (callback: {}) => void) {
+  onNotification (callback: (message: Message) => void) {
     ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
       console.log(`Notification type: ${typeof notification}`)
       console.log(`Notification: ${JSON.stringify(notification)}`)
-      callback(notification)
+      const message = new Message(notification.notification.title, notification.notification.body)
+      callback(message)
     })
   }
 
@@ -66,4 +71,4 @@ class CloudMessaging {
 }
 
 const messagingService = new CloudMessaging()
-export { messagingService }
+export { messagingService, Message }

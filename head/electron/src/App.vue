@@ -47,6 +47,9 @@ body{
   font-size: 2em;
 }
 .notification {
-  font-size: 2em;
+  margin-top: 2em;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 1.5em;
 }
 </style>
