@@ -15,6 +15,7 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
+.gradle
 .vscode
 *.suo
 *.ntvs*
@@ -24,3 +25,5 @@ pnpm-debug.log*
 
 #Electron-builder output
 dist_electron
+
+/home
