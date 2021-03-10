@@ -21,5 +21,11 @@ RUN mkdir -p /workspace/init/home
 WORKDIR /workspace/init/home
 COPY ideavimrc .ideavimrc
 
+USER 0
+RUN apt-get update \
+ && apt-get install -y libgl1-mesa-glx mesa-utils libgl1-mesa-dri \
+ && apt-get clean
+USER $UID
+
 WORKDIR /workspace/home
 ENTRYPOINT /workspace/bin/entry.sh

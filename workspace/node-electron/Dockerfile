@@ -38,4 +38,5 @@ RUN apt-get install -y ca-certificates \
                        lsb-release \
                        wget \
                        xdg-utils \
+		       libgl1-mesa-dri \
  && apt-get clean

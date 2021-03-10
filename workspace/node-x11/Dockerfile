@@ -1,4 +1,4 @@
-FROM node:15-stretch
+FROM node:15-buster
 ARG UID
 
 # This makes sure that a user with the same UID as provided exists in the

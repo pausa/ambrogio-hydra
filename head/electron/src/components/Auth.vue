@@ -24,9 +24,7 @@ export default class Auth extends Vue {
   mounted () {
     this.stopUpdater()
     auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.updater = setInterval(this.refreshToken, 60000)
-      } else {
+      if (!user) {
         this.startLogin()
       }
     })
@@ -80,31 +78,11 @@ export default class Auth extends Vue {
       this.deviceCode = null
       const cred = googleAuthProvider.credential(null, result.data.access_token)
       auth.signInWithCredential(cred)
-        .then(() => {
-          // TODO set updater at a wider time (15 mins?)
-          this.updater = setInterval(this.refreshToken, 60000)
-        }).catch(() => {
+        .catch(() => {
           this.startLogin()
         })
     }).catch(() => {
       // nothing to do
-    })
-  }
-
-  // TODO test if needed
-  refreshToken () {
-    console.log('refreshing token')
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken(true)
-          .catch(() => {
-            this.stopUpdater()
-            this.startLogin()
-          })
-      } else {
-        this.stopUpdater()
-        this.startLogin()
-      }
     })
   }
 
