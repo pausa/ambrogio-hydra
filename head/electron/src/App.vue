@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app"
+       v-on:dblclick="toggleFullScreen"
+       v-on:click="cycleSizes"
+       v-bind:style="{ 'font-size': this.fontSize}">
     <auth/>
     <clock class="clock"/>
     <calendar class="calendar"/>
@@ -22,7 +25,27 @@ import Notification from '@/components/Notification.vue'
     Notification
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  fontSize = '200%'
+  fontSizeIndex = 0
+  fontSizes = ['200%', '250%', '300%', '50%', '75%', '100%', '150%']
+  fullscreen = false
+
+  toggleFullScreen () {
+    if (this.fullscreen) {
+      document.exitFullscreen()
+      this.fullscreen = false
+    } else {
+      document.documentElement.requestFullscreen()
+      this.fullscreen = true
+    }
+  }
+
+  cycleSizes () {
+    this.fontSizeIndex = (this.fontSizeIndex + 1) % this.fontSizes.length
+    this.fontSize = this.fontSizes[this.fontSizeIndex]
+  }
+}
 </script>
 
 <style>
@@ -30,8 +53,6 @@ body{
   display: flex;
   flex-direction: column;
   background-color: black;
-  /* TODO maybe font size should be relative to window size */
-  font-size: 100%;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

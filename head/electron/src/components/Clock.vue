@@ -64,11 +64,11 @@ export default class Clock extends Vue {
 }
 
 .hours {
-  flex-basis: 3%;
+  flex-basis: 1.3em;
 }
 
 .minutes {
-  flex-basis: 3%;
+  flex-basis: 1.3em;
 }
 
 </style>

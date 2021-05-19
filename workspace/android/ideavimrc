@@ -1,5 +1,0 @@
-set ideajoin
-map gr :action RenameElement<CR>
-map gR :action RefactoringMenu<CR>
-map gf :action ReformatCode<CR>
-map <C-w>q :action CloseEditor<CR>
