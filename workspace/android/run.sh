@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 set UID (id -u)
-# Needs to be privileged, in order for electron to work
-docker rm electron-idea
+
+docker rm android
 docker run  -u $UID \
     -e DISPLAY=$DISPLAY \
     -v /usr/share/themes:/usr/share/themes \
@@ -9,7 +9,7 @@ docker run  -u $UID \
     -v /usr/share/fonts:/usr/share/fonts \
     -v $HOME/git/ambrogio-hydra/home:/workspace/home \
     -v $HOME/git:/workspace/git \
-    --privileged \
     --net=host \
-    --name=electron-idea \
-    electron-idea
+    --name=android \
+    --privileged \
+    android

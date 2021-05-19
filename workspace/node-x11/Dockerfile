@@ -9,7 +9,13 @@ RUN mkdir /workspace \
  && usermod -d /workspace/home -m $(id -nu $UID)
 
 RUN apt-get update -y \
-    && apt-get -y install fish vim x11-apps \
+    && apt-get -y install \
+		fish \ 
+		vim \ 
+		x11-apps \
+		libgl1-mesa-glx \
+		mesa-utils \
+		libgl1-mesa-dri \
     && apt-get clean
 
 WORKDIR /workspace

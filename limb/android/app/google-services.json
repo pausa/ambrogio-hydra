@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "370597727411",
+    "firebase_url": "https://ambrogio-hydra.firebaseio.com",
+    "project_id": "ambrogio-hydra",
+    "storage_bucket": "ambrogio-hydra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370597727411:android:1c16c6c77c0c58ec16f4c6",
+        "android_client_info": {
+          "package_name": "dev.pausa.ambrogiolimb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370597727411-otmnjpjqddk7vuuraji3bntncn0gspd7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.pausa.ambrogiolimb",
+            "certificate_hash": "19bf23659b7a0aebe6dd9fc0b60dbd4822e018fe"
+          }
+        },
+        {
+          "client_id": "370597727411-49o4udmav812iklabtlnn34n0e14eap8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGKYLRHit3Y7n-2zmjhM1rGC6TztgshKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370597727411-49o4udmav812iklabtlnn34n0e14eap8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 cp -a /workspace/init/home/. /workspace/home/
-/workspace/idea/bin/idea.sh
+/workspace/android/bin/studio.sh

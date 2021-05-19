@@ -3,7 +3,6 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import { setup as setupPushReceiver } from 'electron-push-receiver'
 import * as path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -39,9 +38,6 @@ function createWindow () {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
-  // adding electron push receiver
-  setupPushReceiver(win.webContents)
 
   win.on('closed', () => {
     win = null

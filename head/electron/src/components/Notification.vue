@@ -32,10 +32,11 @@ export default class Notification extends Vue {
   timeout: NodeJS.Timeout | null = null;
 
   mounted () {
-    this.messaging.onNotification(this.push)
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.push(new Message('Info', `Logged in as: ${user.email}`))
+        // registering after log in, otherwise we cannot get messages
+        this.messaging.onNotification(this.push)
       }
     })
   }
