@@ -1,8 +1,11 @@
-import { auth, config as firebaseConfig, database } from '@/service/firebase'
+import { auth, database } from '@/service/firebase'
 
 class Message {
   // eslint-disable-next-line no-useless-constructor
-  constructor (readonly title: string, readonly text: string) {
+  constructor (readonly title: string,
+               readonly text: string,
+               readonly uid?: string,
+               readonly color: string = 'inherit') {
   }
 }
 

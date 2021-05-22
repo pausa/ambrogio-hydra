@@ -18,13 +18,12 @@ class NotificationListener : NotificationListenerService() {
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         sbn?.notification
             ?.takeIf { connected.and(shouldForward(it)) }
-            ?.run { extras }
             ?.run {
-                val text = getCharSequence(EXTRA_TEXT)
-                val title = getCharSequence(EXTRA_TITLE)
-                Log.i("NOTIFICATION", "Raw notification: $title: $text")
+                val text = extras.getCharSequence(EXTRA_TEXT)
+                val title = extras.getCharSequence(EXTRA_TITLE)
+                val hexColor = String.format("#%06X", 0xFFFFFF and color)
                 if (text != null && title != null) {
-                    Notification(title.toString(), text.toString())
+                    Notification(title.toString(), text.toString(), hexColor, "incoming_notification")
                 } else {
                     null
                 }

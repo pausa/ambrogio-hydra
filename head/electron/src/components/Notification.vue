@@ -3,12 +3,12 @@
     <transition name="progress"
       v-on:after-leave="showPlaceholder = true; message = null"
       v-on:before-enter="showPlaceholder = false">
-      <div v-if="showProgress" class="line"></div>
+      <div v-if="showProgress" class="line" v-bind:style="{ 'color': message.color }"></div>
     </transition>
     <div v-if="showPlaceholder" class="line"></div>
     <transition name="fade">
       <div v-if="message !== null">
-        <div class="title">{{ message.title }}</div>
+        <div class="title" v-bind:style="{ 'color': message.color }">{{ message.title }}</div>
         <div class="text">{{ message.text }}</div>
       </div>
     </transition>
@@ -104,6 +104,9 @@ export default class Notification extends Vue {
    width: 0;
  }
  .title{
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
    font-weight: bold;
    font-size: 1.25em;
  }
