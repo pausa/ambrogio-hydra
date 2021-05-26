@@ -42,8 +42,18 @@ class NotificationListener : NotificationListenerService() {
      * Only notifications that can be replied should be forwarded, the others can wait
      */
     private fun shouldForward(notification: android.app.Notification): Boolean {
+        Log.i("NOTIFICATION", notification.toString())
+        return hasRemoteActions(notification)
+            .or(isCall(notification))
+    }
+
+    private fun hasRemoteActions(notification: android.app.Notification): Boolean {
         return notification.actions
             ?.any { it.remoteInputs?.isNotEmpty() ?: false }
             ?: false
+    }
+
+    private fun isCall(notification: android.app.Notification): Boolean {
+        return android.app.Notification.CATEGORY_CALL == notification.category
     }
 }
