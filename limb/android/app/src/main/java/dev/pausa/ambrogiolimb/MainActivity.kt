@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dev.pausa.ambrogiolimb.model.Notification
 import dev.pausa.ambrogiolimb.publisher.publishNotification
 
@@ -29,6 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     fun sendMessage(view: View) {
         publishNotification(Notification("Test Notification", "Everything works fine"))
+    }
+
+    fun openSettings(view: View){
+        val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+        startActivity(intent)
     }
 
 
